@@ -78,8 +78,7 @@ Run tests using the included `Makefile`.
 
 ## 👩‍💻 作者 | Author
 
-由 [你的名字] 实现。  
-Implemented by [Your Name].
+Implemented by Mandy Liu.
 
 ---
 
