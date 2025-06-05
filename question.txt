@@ -1,0 +1,129 @@
+===============================================================================
+
+1. Instructions
+    Stage 1 : implement
+[X]           - sbox         module                                  ( 20%)
+[X]           - key_schedule module                                  ( 10%)
+[X]           - round        module                                  ( 10%)
+
+[X] Stage 2 : implement encrypt_v1 module, combinatorial design      ( 20%)
+
+[*] Stage 3 : implement encrypt_v2 module, iterative     design      ( 20%)
+no syntax error but encrypt fail, some error in S1 to S2
+
+[*] Stage 4 : implement encrypt_v3 module, pipelined     design      ( 20%)
+no syntax error but encrypt fail, guess maybe design wrong
+
+===============================================================================
+
+2. Information
+
+So that we can calibrate and improve the assignment in the future, give us
+a rough idea how long (in hours) you spent on it *in total*:
+
+effort : [about 75 or more] hours
+
+===============================================================================
+
+3. Citation
+
+Clearly it might have an influence on your mark, but the use of third-party
+resources is allowed *iff.* it
+
+- hasn't been explicitly prohibited by the assignment description, *and*
+- is correctly cited.
+
+Let us know any third-party source code or resources you used (if any) so
+it's clear what's your work and what isn't:
+
+[
+  1. Andrey Bogdanov, Lars R. Knudsen, Gregor Leander, Christof Paar, 
+  Axel Poschmann, Matthew J. B. Robshaw, Yannick Seurin, and C. Vikkelsoe. 
+  "RESENT: An Ultra-Lightweight Block Cipher." *Proceedings of the 9th 
+  International Workshop on Cryptographic Hardware and Embedded Systems (CHES 2007)*,
+  Springer, 2007. [Link to paper](https://www.iacr.org/archive/ches2007/47270450/47270450.pdf)
+
+  2. Dey, Sankhanil & Ghosh, Ranjan. (2018). A Review of Existing 4-Bit Crypto 
+  S-Box Cryptanalysis Techniques and Two New Techniques with 4-Bit Boolean Functions 
+  for Cryptanalysis of 4-Bit Crypto S-Boxes*. Advances in Pure Mathematics. 08. 272-306. 
+  10.4236/apm.2018.83015.
+
+  3. Wolkerstorfer, J., Oswald, ME., & Lamberger, M. (2002). An ASIC implementation of the 
+  AES SBoxes. Lecture Notes in Computer Science , 29 - 52. http://www.springerlink.com/content/
+  r6437m2yx03ky0xe 
+  
+  4.Abhishek Kumar, Sokat Tejani. "S-BOX Architecture." In *Future Trends in Networking 
+  and Communication Technologies*, Lecture Notes in Computer Science, vol. 958, Springer, 
+  2019. This paper compares different S-Box architectures, including a modified LUT-based 
+  approach with decoders and multiplexers, which initially inspired the MUX and decoder
+  method for this project.
+
+  5.Digital Design: With an Introduction to the Verilog HDL, VHDL, and SystemVerilog
+  https://www.pearson.com/en-us/subject-catalog/p/digital-design-with-an-introduction-to-
+  the-verilog-hdl-vhdl-and-systemverilog/P200000003437
+]
+
+===============================================================================
+
+4. Marking
+
+The following gives a stage-by-stage description of the assignment marking
+scheme.  Note this acts as an indicative guideline only, including weights
+for each more obvious aspect (e.g., functional correctness); other aspects
+outside this list can warrant an increase/decrease in marks, with examples
+including hard to quantify features such as style, efficiency, robustness, 
+generality, or realism of a solution.  Put another way, identifying then
+reasoning about these latter aspects forms part of the assessment, so they
+are not (necessarily) detailed explicitly.
+
+    Stage 1 : implement
+[?]           - sbox         module                                  ( 20%)
+[?]           - key_schedule module                                  ( 10%)
+[?]           - round        module                                  ( 10%)
+
+[?] Stage 2 : implement encrypt_v1 module, combinatorial design      ( 20%)
+
+[?] Stage 3 : implement encrypt_v2 module, iterative     design      ( 20%)
+
+[?] Stage 4 : implement encrypt_v3 module, pipelined     design      ( 20%)
+
+                                                                     ------
+                                                                     (100%)
+
+===============================================================================
+
+5. Documentation
+
+Any other documentation, notes or comments that you think are important or
+might be easy to overlook (e.g., a subtle issue or technique in associated
+source code) should go here:
+
+[
+  1. sbox part
+    I waste lots of time on this module. I did the S-box using MUX and decoders 
+    based on Kumar's "S-BOX Architecture" paper. This method was efficient, but 
+    required more hardware resources. This conflicted with PRESENT's design goal 
+    of compact hardware implementation. After reviewing Dey and Ghosh's research, 
+    I switched to using Boolean functions. I drawing Karnaugh maps for the S-box, 
+    then got boolean algerbra. This method fit with PRESENT's design goal.But I think 
+    it less flexible.
+
+  2. encrypt_v1
+    I learned about using generate (loop)for creating multiple instances in hardware 
+    design, it makes the code more readable. In my encrypt_v3 module, I used generate 
+    to create 32 pipeline stages, but I didn't have time to fully debug and optimize 
+    it, I believe this structured approach is clearer than writing out each stage. 
+
+  3. encrypt_v2
+    I encountered some difficulties in implementing state machine control, particularly 
+    in state transition timing. While the basic encryption 
+    functionality works, the control section needs further optimization. The main issues 
+    lie in key_schedule connections and state transition timing.
+  
+  4. encrypt_v3
+    For encrypt_v3, I thought about it like 32 encryption units connected together. In my 
+    code, I used r_reg[] and k_reg[] arrays to store each stage's data and key, and used 
+    r_wire[] and k_wire[] arrays to connect them. I used generate to create 32 copies of 
+    round and key_schedule modules and it fail and I have no time to debug it.
+]
+===============================================================================
